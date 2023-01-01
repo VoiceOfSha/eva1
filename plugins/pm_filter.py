@@ -356,6 +356,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 return
             elif settings['botpm']:
                 await client.send_message(chat_id=query.from_user.id,text = f"<b>==> Title : {files.file_name}\n\n==> File_Size : {get_size(files.file_size)}</b>")
+                await query.answer('Check PM, I have sent files in pm', show_alert=True)
                 return
             else:
                 shortbtn = [

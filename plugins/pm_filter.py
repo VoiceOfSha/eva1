@@ -358,12 +358,17 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
             else:
-                await client.send_cached_media(
-                    chat_id=query.from_user.id,
-                    file_id=file_id,
-                    caption=f_caption,
-                    protect_content=True if ident == "filep" else False 
-                )
+                shortbtn = [
+                    [
+                        InlineKeyboardButton(text=f"Download Link", url=f"{shorten_link}")
+                    ],
+                    [
+                        InlineKeyboardButton(text=f"How To Downlload", url=f"https://telegram.me/how_to_download_tutorial/2")
+                    ]
+                ]
+                short_markup = InlineKeyboardMarkup(shortbtn)
+                shorten_link = f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}"
+                await client.send_message(chat_id=query.from_user.id,text = f"<b>==> Title : {files.file_name}\n\n==> File_Size : {get_size(files.file_size)}</b>", reply_markup=short_markup)
                 await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
             await query.answer('Unblock the bot mahn !', show_alert=True)
